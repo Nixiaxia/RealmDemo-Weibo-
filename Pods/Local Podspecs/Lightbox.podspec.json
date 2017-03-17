@@ -1,0 +1,36 @@
+{
+  "name": "Lightbox",
+  "summary": "A short description of Lightbox.",
+  "version": "1.0.0",
+  "homepage": "https://github.com/hyperoslo/Lightbox",
+  "license": "MIT",
+  "authors": {
+    "Hyper Interaktiv AS": "ios@hyper.no"
+  },
+  "source": {
+    "git": "https://github.com/hyperoslo/Lightbox.git",
+    "tag": "1.0.0"
+  },
+  "social_media_url": "https://twitter.com/hyperoslo",
+  "platforms": {
+    "ios": "8.0"
+  },
+  "requires_arc": true,
+  "source_files": "Source/**/*",
+  "ios": {
+    "resources": "Resources/Lightbox.bundle"
+  },
+  "frameworks": [
+    "UIKit",
+    "AVFoundation",
+    "AVKit"
+  ],
+  "dependencies": {
+    "Sugar": [
+
+    ],
+    "Hue": [
+
+    ]
+  }
+}

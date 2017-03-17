@@ -1,0 +1,51 @@
+PODS:
+  - Hue (1.2.0)
+  - ImagePicker (2.0.0)
+  - Lightbox (1.0.0):
+    - Hue
+    - Sugar
+  - MJRefresh (3.1.12)
+  - SnapKit (3.0.2)
+  - Sugar (3.1.2)
+
+DEPENDENCIES:
+  - Hue (from `https://github.com/hyperoslo/Hue.git`, branch `swift3`)
+  - ImagePicker
+  - Lightbox (from `https://github.com/hyperoslo/Lightbox.git`, branch `swift-3`)
+  - MJRefresh
+  - SnapKit (~> 3.0.0)
+  - Sugar (from `https://github.com/hyperoslo/Sugar.git`, branch `master`)
+
+EXTERNAL SOURCES:
+  Hue:
+    :branch: swift3
+    :git: https://github.com/hyperoslo/Hue.git
+  Lightbox:
+    :branch: swift-3
+    :git: https://github.com/hyperoslo/Lightbox.git
+  Sugar:
+    :branch: master
+    :git: https://github.com/hyperoslo/Sugar.git
+
+CHECKOUT OPTIONS:
+  Hue:
+    :commit: 3303cbcdf0f771aea1a6d1a153e4b95eef8696eb
+    :git: https://github.com/hyperoslo/Hue.git
+  Lightbox:
+    :commit: 04437d8450a5ccc92af7e9bd08027bdced9fb589
+    :git: https://github.com/hyperoslo/Lightbox.git
+  Sugar:
+    :commit: 41e0f1e92bfd29b805fa74f87444975ca2976887
+    :git: https://github.com/hyperoslo/Sugar.git
+
+SPEC CHECKSUMS:
+  Hue: 0705083b7aff40334033373e6293ec1215285ac2
+  ImagePicker: 81175d36c2852cb543cb4f5d6c19e28f3e8d90eb
+  Lightbox: e4523e8cf3261cbc833d0e76ae4dae774731d115
+  MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
+  SnapKit: 2e456761aa92d4d4067a7a5594c18769d451a8ad
+  Sugar: 41f2efa0244806f524ff2d77c951a6a43e81a0f3
+
+PODFILE CHECKSUM: d90f2e4858feefb29fc810a4f1d3aa20d32e962b
+
+COCOAPODS: 1.1.1
