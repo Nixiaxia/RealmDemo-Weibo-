@@ -14,9 +14,8 @@ public func currentUserID() -> String { // 获取当前登陆用户ID
     var currentID = SaveAccount()
     
     let saveAccount = try! Realm().objects(SaveAccount.self)
-    for i in 0..<1 {
-        currentID = saveAccount[i]
-    }
+    
+    currentID = saveAccount.first!
     
     return currentID.saveAccount
 }

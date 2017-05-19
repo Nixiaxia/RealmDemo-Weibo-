@@ -8,8 +8,11 @@
 
 import UIKit
 import Lightbox
+import RealmSwift
 
 class MainPageCellDetails: UIViewController {
+    
+    let realm = try! Realm()
     
     var item = MainPageModel() // 接收上个页面的值
     
@@ -17,7 +20,7 @@ class MainPageCellDetails: UIViewController {
     
     var commentOrDidSelect = false
     
-    var tableView: UITableView! // 评论的tableView
+    var tableView: UITableView! // 评论和点赞的tableView
     
     var accountImages: UICollectionView! // 图片collectionView
     
@@ -28,9 +31,13 @@ class MainPageCellDetails: UIViewController {
     
     var lineLabel: UILabel! // 底部横线动画
     
+    var chooseLeaveMessage = true // 默认选择是评论
+    
+    var praiseBottomButton: UIButton! // 底部右边点赞按钮
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         self.view.backgroundColor = appDGrayColor
         self.title = "正文"
@@ -43,11 +50,19 @@ class MainPageCellDetails: UIViewController {
         
         // 底层tableview
         tableView = UITableView.init(frame: CGRect.init(x: 0, y: 0, width: 0, height: 0), style: .plain)
-        tableView.backgroundColor = appDGrayColor
+        tableView.backgroundColor = UIColor.white
         tableView.frame = self.view.bounds
         tableView.separatorStyle = .none
+
+        tableView.estimatedRowHeight = 200
+        tableView.rowHeight = UITableViewAutomaticDimension
+        
         tableView.delegate = self
         tableView.dataSource = self
+        
+        tableView.register(LeaveMessageCell.self, forCellReuseIdentifier: "LeaveMessageCell")
+        tableView.register(PraiseCell.self, forCellReuseIdentifier: "praiseCell")
+        
         self.view.addSubview(tableView)
         
         // tableView上的headView
@@ -56,16 +71,92 @@ class MainPageCellDetails: UIViewController {
         headView.frame = CGRect.init(x: 0, y: 0, width: boundsWidth, height: 200)
         tableView.tableHeaderView = headView
         
-        // 用户头像
-        let headImageView = UIImageView()
-        if item.image != nil {
-            headImageView.image = UIImage.init(data: item.image as! Data)
+        // 底部View
+        let bottomView = UIView()
+        bottomView.backgroundColor = UIColor.white
+        self.view.addSubview(bottomView)
+        bottomView.snp.makeConstraints { (make) in
+            make.bottom.equalTo(0)
+            make.left.right.equalTo(0)
+            make.centerX.equalTo(self.view.snp.centerX)
+            make.height.equalTo(50)
+        }
+        
+        // 底部View上面的一条横线
+        let bottomsTopLine = UILabel()
+        bottomsTopLine.backgroundColor = appDGrayColor
+        bottomView.addSubview(bottomsTopLine)
+        bottomsTopLine.snp.makeConstraints { (make) in
+            make.top.equalTo(0)
+            make.centerX.equalTo(bottomView.snp.centerX)
+            make.height.equalTo(2)
+            make.width.equalTo(boundsWidth)
+        }
+        
+        // 底部View左边评论
+        let leaveMessageButton = UIButton()
+        leaveMessageButton.setTitle(" 评论", for: .normal)
+        leaveMessageButton.setTitleColor(UIColor.darkGray, for: .normal)
+        leaveMessageButton.setImage(UIImage.init(named: "评论"), for: .normal)
+//        leaveMessageButton.backgroundColor = appDGrayColor
+        bottomView.addSubview(leaveMessageButton)
+        leaveMessageButton.snp.makeConstraints { (make) in
+            make.centerY.equalTo(bottomView.snp.centerY)
+            make.width.equalTo((boundsWidth - 1)/2)
+            make.height.equalTo(48)
+            make.bottom.equalTo(0)
+            make.centerX.equalTo(bottomView.snp.centerX).offset(-(boundsWidth/4)-1)
+        }
+        leaveMessageButton.addTarget(self, action: #selector(leaveMessageButtonAction), for: .touchUpInside)
+        
+        // 中间竖杠
+        let verticalLine = UILabel()
+        verticalLine.backgroundColor = appDGrayColor
+        bottomView.addSubview(verticalLine)
+        verticalLine.snp.makeConstraints { (make) in
+            make.centerX.equalTo(bottomView.snp.centerX)
+            make.width.equalTo(1)
+            make.height.equalTo(35)
+            make.centerY.equalTo(bottomView.snp.centerY)
+        }
+        
+        // 底部View右边点赞
+        praiseBottomButton = UIButton()
+        
+        if item.praiseFalse {
+            praiseBottomButton.setTitle(" 已赞", for: .normal)
+            praiseBottomButton.setTitleColor(UIColor.orange, for: .normal)
+            praiseBottomButton.setImage(UIImage.init(named: "点赞-2"), for: .normal)
         }else {
-            headImageView.image = UIImage.init(named: "个人")
+            praiseBottomButton.setTitle(" 赞", for: .normal)
+            praiseBottomButton.setTitleColor(UIColor.darkGray, for: .normal)
+            praiseBottomButton.setImage(UIImage.init(named: "点赞"), for: .normal)
+        }
+        //        leaveMessageButton.backgroundColor = appDGrayColor
+        bottomView.addSubview(praiseBottomButton)
+        praiseBottomButton.snp.makeConstraints { (make) in
+            make.centerY.equalTo(bottomView.snp.centerY)
+            make.width.equalTo((boundsWidth - 1)/2)
+            make.height.equalTo(48)
+            make.bottom.equalTo(0)
+            make.centerX.equalTo(bottomView.snp.centerX).offset((boundsWidth/4))
+        }
+        praiseBottomButton.addTarget(self, action: #selector(praiseBottomButtonAction), for: .touchUpInside)
+        
+        
+        // 用户头像
+        let headImageView = UIButton()
+        if item.image != nil {
+//            headImageView.image = UIImage.init(data: item.image as! Data)
+            headImageView.setImage(UIImage.init(data: item.image as! Data), for: .normal)
+        }else {
+//            headImageView.image = UIImage.init(named: "个人")
+            headImageView.setImage(UIImage.init(named: "个人"), for: .normal)
         }        
         headImageView.layer.cornerRadius = 20
         headImageView.layer.masksToBounds = true
         headImageView.contentMode = .scaleAspectFill
+        headImageView.addTarget(self, action: #selector(headImageViewAction), for: .touchUpInside)
         headView.addSubview(headImageView)
         headImageView.snp.makeConstraints { (make) in
             make.left.equalTo(10)
@@ -189,6 +280,82 @@ class MainPageCellDetails: UIViewController {
         accountImages.reloadData()
         
     }
+    
+    // 点击用户头像的点击事件
+    func headImageViewAction() {
+        let vc = UserDetailVC()
+        vc.userAccount = item.accountID
+        vc.userCurrentNickname = item.accountName
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    // 点击评论按钮点击事件
+    func leaveMessageButtonAction() {
+        let vc = WriteLeaveMessageVC()
+        vc.item = self.item
+        self.present(vc, animated: true, completion: nil)
+   
+    }
+    
+    // 点击赞按钮点击事件
+    func praiseBottomButtonAction() {
+        
+        let currentID = currentUserID()
+        
+        // 判断点赞
+        if item.praiseFalse {
+            praiseBottomButton.setTitle(" 赞", for: .normal)
+            praiseBottomButton.setTitleColor(UIColor.darkGray, for: .normal)
+            praiseBottomButton.setImage(UIImage.init(named: "点赞"), for: .normal)
+            
+            for i in 0..<item.praisePeople.count {
+                if item.praisePeople[i].praiseName == currentID {// 找到当前登陆用户
+                    try! self.realm.write {
+                        self.realm.delete(item.praisePeople[i])// 从点赞用户里面删除
+                    }
+                    break // break，不然会数组越界
+                }
+            }
+            
+            try! realm.write {
+                item.praiseNumber = item.praiseNumber - 1
+                item.praiseFalse = false
+                self.realm.add(item, update: true)
+            }
+        }else {
+            praiseBottomButton.setTitle(" 已赞", for: .normal)
+            praiseBottomButton.setTitleColor(UIColor.orange, for: .normal)
+            praiseBottomButton.setImage(UIImage.init(named: "点赞-2"), for: .normal)
+            
+            let praisePeople = PraisePeople()
+            praisePeople.praiseName = currentID // 将当前登陆用户传值给praisePeople
+            try! self.realm.write { // 更新数据库
+                item.praiseNumber = item.praiseNumber + 1
+                item.praiseFalse = true
+                item.praisePeople.append(praisePeople) // 把当前登陆用户储存到点赞的数据库中
+                self.realm.add(item, update: true)
+            }
+            
+            
+        }
+        tableView.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if item.praiseFalse {
+            praiseBottomButton.setTitle(" 已赞", for: .normal)
+            praiseBottomButton.setTitleColor(UIColor.orange, for: .normal)
+            praiseBottomButton.setImage(UIImage.init(named: "点赞-2"), for: .normal)
+        }else {
+            praiseBottomButton.setTitle(" 赞", for: .normal)
+            praiseBottomButton.setTitleColor(UIColor.darkGray, for: .normal)
+            praiseBottomButton.setImage(UIImage.init(named: "点赞"), for: .normal)
+        }
+        
+        tableView.reloadData()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -214,11 +381,40 @@ extension MainPageCellDetails: UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        
+        if chooseLeaveMessage {
+            return item.leaveMessage.count
+        }else {
+            return item.praiseNumber
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        
+        if chooseLeaveMessage {
+            let cell: LeaveMessageCell = tableView.dequeueReusableCell(withIdentifier: "LeaveMessageCell") as! LeaveMessageCell // cell复用
+            
+            cell.configerLeaveMessageCell(model: item.leaveMessage[indexPath.row])
+            
+            return cell
+//            return UITableViewCell()
+        }else {
+            let cell: PraiseCell = tableView.dequeueReusableCell(withIdentifier: "praiseCell") as! PraiseCell // cell复用
+            // 找出点赞人的账号
+            let userInfor = item.praisePeople
+            
+            if userInfor.count > 0 {
+                // 下载用户
+                let userAccount = try! Realm().objects(User.self)
+                
+                for i in userAccount {
+                    if userInfor[indexPath.row].praiseName == i.userName{
+                        cell.configerMainPageCell(model: i.userInfo!)
+                    }
+                }
+            }
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -226,7 +422,7 @@ extension MainPageCellDetails: UITableViewDelegate,UITableViewDataSource {
         let baseView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: boundsWidth, height: 30))
         baseView.backgroundColor = appDGrayColor
         
-        // 
+        // “评论”和“赞”的那一层视图
         let whiteView = UIView.init(frame: CGRect.init(x: 0, y: 10, width: boundsWidth, height: 40))
         whiteView.backgroundColor = UIColor.white
         baseView.addSubview(whiteView)
@@ -234,8 +430,15 @@ extension MainPageCellDetails: UITableViewDelegate,UITableViewDataSource {
         // 评论按钮
         commentButton = UIButton()
         commentButton.setTitle("评论 \(item.leaveMessage.count)", for: .normal)
-        commentButton.setTitleColor(UIColor.black, for: .normal)
-        commentButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        
+        if chooseLeaveMessage == true{
+            commentButton.setTitleColor(UIColor.black, for: .normal)
+            commentButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        }else {
+            commentButton.setTitleColor(UIColor.darkGray, for: .normal)
+            commentButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        }
+        
         whiteView.addSubview(commentButton)
         commentButton.snp.makeConstraints { (make) in
             make.left.equalTo(0)
@@ -248,8 +451,15 @@ extension MainPageCellDetails: UITableViewDelegate,UITableViewDataSource {
         // 点赞按钮
         praiseButton = UIButton()
         praiseButton.setTitle("赞 \(item.praiseNumber)", for: .normal)
-        praiseButton.setTitleColor(UIColor.darkGray, for: .normal)
-        praiseButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        
+        if chooseLeaveMessage == false {
+            praiseButton.setTitleColor(UIColor.black, for: .normal)
+            praiseButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        }else {
+            praiseButton.setTitleColor(UIColor.darkGray, for: .normal)
+            praiseButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        }
+        
         whiteView.addSubview(praiseButton)
         praiseButton.snp.makeConstraints { (make) in
             make.right.equalTo(0)
@@ -264,37 +474,79 @@ extension MainPageCellDetails: UITableViewDelegate,UITableViewDataSource {
         lineLabel.backgroundColor = appBlueColor
         lineLabel.layer.cornerRadius = 5
         lineLabel.layer.masksToBounds = true
-        lineLabel.frame = CGRect.init(x: 20, y: 50, width: 50, height: 10)
+        if chooseLeaveMessage {
+            lineLabel.frame = CGRect.init(x: 20, y: 50, width: 50, height: 10)
+        }else {
+            self.lineLabel.frame = CGRect.init(x: boundsWidth - 70, y: 50, width: 50, height: 10)
+        }
+        
         baseView.addSubview(lineLabel)
 
         return baseView
     }
     
+    // tableview头视图高度
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 60
     }
     
+    // cell高度
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if chooseLeaveMessage {
+            return UITableViewAutomaticDimension
+        }else {
+            return 60
+        }
+    }
+    
+    // 选中cell
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        if chooseLeaveMessage {
+            let userInfor = item.leaveMessage[indexPath.row].currentLeaveID
+            
+            let vc = UserDetailVC()
+            
+            vc.userAccount = userInfor
+            
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+        }else {
+            // 获取选中的账号
+            let userInfor = item.praisePeople[indexPath.row].praiseName
+            
+            let vc = UserDetailVC()
+            
+            vc.userAccount = userInfor
+            
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
     // 点击评论的后
     func commentButtonAction() {
-        praiseButton.setTitleColor(UIColor.darkGray, for: .normal)
-        praiseButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
-        commentButton.setTitleColor(UIColor.black, for: .normal)
-        commentButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         
-        UIView.animate(withDuration: 0.3) {
+        // 点击评论切换
+        chooseLeaveMessage = true
+        
+        UIView.animate(withDuration: 0.3, animations: { 
             self.lineLabel.frame = CGRect.init(x: 20, y: 50, width: 50, height: 10)
+        }) { (true) in
+            self.tableView.reloadData()
         }
     }
     
     // 点击赞后
     func praiseButtonAction() {
-        commentButton.setTitleColor(UIColor.darkGray, for: .normal)
-        commentButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
-        praiseButton.setTitleColor(UIColor.black, for: .normal)
-        praiseButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         
-        UIView.animate(withDuration: 0.3) {
+        // 点击赞的按钮
+        chooseLeaveMessage = false
+        
+        UIView.animate(withDuration: 0.3, animations: { 
             self.lineLabel.frame = CGRect.init(x: boundsWidth - 70, y: 50, width: 50, height: 10)
+        }) { (true) in
+            self.tableView.reloadData()
         }
     }
 }

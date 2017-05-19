@@ -17,6 +17,8 @@ class MinePageVC: UIViewController {
     var deleteAccount: Results<SaveAccount>?
     var user:Results<User>?
     
+    var myReleaseArray = [MainPageModel]()
+    
     private var scrollView: UIScrollView! // 底层滚动视图
     
     private var headView: UIView! // 头部视图
@@ -24,14 +26,14 @@ class MinePageVC: UIViewController {
     private var headNameLB: UILabel! // 头部姓名
     private var headNumberLB: UILabel! // 头部电话
     private var waverView: UIView! // 波浪
-    private var foucsDoctor: UIView! // 关注的医生
-    private var foucsHospital: UIView! // 关注的医院
     
-    private var setting: cellView! // 设置
+    private var myRelease: CustomUIButton! // 我的发布
+    private var focus: CustomUIButton! // 关注
+    private var fans: CustomUIButton! // 粉丝
     
     var imageBlock: (([UIImage])->())?
     
-    private let headHeight = (UIScreen.main.bounds.height)*290/736 // 头部高度
+//    private let headHeight = (UIScreen.main.bounds.height)*290/736 // 头部高度
     
     private var speed: CGFloat = 1
     
@@ -39,11 +41,32 @@ class MinePageVC: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        self.navigationController?.isNavigationBarHidden = true
+        
         self.view.backgroundColor = appDGrayColor
         
-        createScrollView()
+//        download()
         
+        createScrollView()
+  
+    }
+    
+    // 生命周期view将要出现
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        download()
+
+        // 获取当前用户ID
+        let currentUserId = currentUserID()
+        // 获取当前用户ID获取当前用户的信息
+        let currentUserInfo = try! Realm().objects(User.self).filter("userName == '\(currentUserId)'")
+        
+        self.navigationController?.isNavigationBarHidden = true
+        myRelease.number = myReleaseArray.count
+        focus.number = currentUserInfo.first?.userInfo?.attentionPeople.count
+        fans.number = currentUserInfo.first?.userInfo?.fansPeople.count
+        
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     // 创建底层滑动页面
@@ -81,7 +104,7 @@ class MinePageVC: UIViewController {
         headView.snp.makeConstraints { (make) in
             make.top.equalTo(scrollView).offset(-20)
             make.left.equalTo(scrollView)
-            make.height.equalTo((UIScreen.main.bounds.height)*290/736)
+            make.height.equalTo(290)
             make.width.equalTo(self.view.bounds.width)
         }
         
@@ -147,7 +170,7 @@ class MinePageVC: UIViewController {
             make.top.equalTo(headImageButton.snp.bottom).offset(5)
             make.centerX.equalTo(headView)
             make.width.equalTo(boundsWidth)
-            make.height.equalTo((headHeight)*30/290)
+            make.height.equalTo(30)
         }
         
         // 头部账号
@@ -160,7 +183,7 @@ class MinePageVC: UIViewController {
             make.top.equalTo(headNameLB.snp.bottom)
             make.centerX.equalTo(headView)
             make.width.equalTo(boundsWidth)
-            make.height.equalTo((headHeight)*20/290)
+            make.height.equalTo(20)
         }
         
         // 波浪
@@ -171,92 +194,49 @@ class MinePageVC: UIViewController {
             make.top.equalTo(headNumberLB.snp.bottom)
             make.centerX.equalTo(headView)
             make.width.equalTo(boundsWidth)
-            make.height.equalTo((headHeight)*30/290)
+            make.height.equalTo(30)
         }
         createWaver()
         
-        // 关注的医生
-        foucsDoctor = UIView()
-        foucsDoctor.backgroundColor = UIColor.white
-        headView.addSubview(foucsDoctor)
-        foucsDoctor.snp.makeConstraints { (make) in
-            make.top.equalTo(waverView.snp.bottom)
+        // 我的发布
+        myRelease = CustomUIButton()
+        myRelease.initWithProperty(titleString: "我的发布")
+        myRelease.number = myReleaseArray.count
+        headView.addSubview(myRelease)
+        myRelease.snp.makeConstraints { (make) in
             make.left.equalTo(0)
             make.bottom.equalTo(0)
-            make.width.equalTo(boundsWidth/2)
+            make.width.equalTo(boundsWidth/3)
+            make.height.equalTo(55)
         }
-        // 关注医生的数量
-        let foucsNumberLB_1 = UILabel()
-        foucsNumberLB_1.text = "0"
-        foucsNumberLB_1.font = UIFont.systemFont(ofSize: 20)
-        foucsNumberLB_1.textAlignment = .center
-        foucsDoctor.addSubview(foucsNumberLB_1)
-        foucsNumberLB_1.snp.makeConstraints { (make) in
-            make.top.equalTo(5)
-            make.centerX.equalTo(foucsDoctor)
-            make.height.equalTo(foucsDoctor.snp.height).multipliedBy(0.5)
-            make.width.equalTo(boundsWidth/2)
-        }
+        myRelease.addTarget(self, action: #selector(myReleaseAction), for: .touchUpInside)
         
-        //“关注的医生”
-        let foucsDoctorLB_1 = UILabel()
-        foucsDoctorLB_1.text = "关注的医生"
-        foucsDoctorLB_1.textAlignment = .center
-        foucsDoctor.addSubview(foucsDoctorLB_1)
-        foucsDoctorLB_1.snp.makeConstraints { (make) in
-            make.top.equalTo(foucsNumberLB_1.snp.bottom)
-            make.centerX.equalTo(foucsDoctor)
-            //            make.bottom.equalTo(-20)
-            make.width.equalTo(boundsWidth/2)
-        }
-        
-        // 关注的医院
-        foucsHospital = UIView()
-        foucsHospital.backgroundColor = UIColor.white
-        headView.addSubview(foucsHospital)
-        foucsHospital.snp.makeConstraints { (make) in
-            make.top.equalTo(waverView.snp.bottom)
-            make.right.equalTo(0)
+        // 关注
+        focus = CustomUIButton()
+        focus.initWithProperty(titleString: "关注")
+        focus.number = currentUserInfo.first?.userInfo?.attentionPeople.count
+        headView.addSubview(focus)
+        focus.snp.makeConstraints { (make) in
+            make.left.equalTo(myRelease.snp.right)
             make.bottom.equalTo(0)
-            make.width.equalTo(boundsWidth/2)
+            make.width.equalTo(boundsWidth/3)
+            make.height.equalTo(55)
         }
-        // 关注医院的数量
-        let foucsNumberLB_2 = UILabel()
-        foucsNumberLB_2.text = "0"
-        foucsNumberLB_2.font = UIFont.systemFont(ofSize: 20)
-        foucsNumberLB_2.textAlignment = .center
-        foucsHospital.addSubview(foucsNumberLB_2)
-        foucsNumberLB_2.snp.makeConstraints { (make) in
-            make.top.equalTo(5)
-            make.centerX.equalTo(foucsHospital)
-            make.height.equalTo(foucsHospital.snp.height).multipliedBy(0.5)
-            make.width.equalTo(boundsWidth/2)
-        }
-        //“关注的医院”
-        let foucsDoctorLB_2 = UILabel()
-        foucsDoctorLB_2.text = "关注的医院"
-        foucsDoctorLB_2.textAlignment = .center
-        foucsHospital.addSubview(foucsDoctorLB_2)
-        foucsDoctorLB_2.snp.makeConstraints { (make) in
-            make.top.equalTo(foucsNumberLB_1.snp.bottom)
-            make.centerX.equalTo(foucsHospital)
-            //            make.bottom.equalTo(-20)
-            make.width.equalTo(boundsWidth/2)
-        }
-
+        focus.addTarget(self, action: #selector(focusAction), for: .touchUpInside)
         
-        // 设置
-//        setting = cellView()
-//        setting.initWithFrame(image: "set", leftName: "设置", rightName: nil)
-//        setting.isUserInteractionEnabled = true
-//        scrollView.addSubview(setting)
-//        setting.snp.makeConstraints { (make) in
-//            make.top.equalTo(foucsHospital.snp.bottom).offset(12)
-//            make.width.equalTo(scrollView)
-//            make.height.equalTo(50)
-//            make.left.equalTo(0)
-//        }
-        
+        // 粉丝
+        fans = CustomUIButton()
+        fans.initWithProperty(titleString: "粉丝")
+        fans.number = currentUserInfo.first?.userInfo?.fansPeople.count
+        headView.addSubview(fans)
+        fans.snp.makeConstraints { (make) in
+            make.left.equalTo(focus.snp.right)
+            make.bottom.equalTo(0)
+            make.width.equalTo(boundsWidth/3)
+            make.height.equalTo(55)
+        }
+        fans.addTarget(self, action: #selector(fansAction), for: .touchUpInside)
+ 
         // 退出登录
         let logout = UIButton()
         logout.setTitle("退出", for: .normal)
@@ -265,7 +245,7 @@ class MinePageVC: UIViewController {
         logout.titleLabel?.textAlignment = .center
         scrollView.addSubview(logout)
         logout.snp.makeConstraints { (make) in
-            make.top.equalTo(foucsHospital.snp.bottom).offset(12)
+            make.top.equalTo(headView.snp.bottom).offset(12)
             make.width.equalTo(scrollView)
             make.height.equalTo(50)
             make.left.equalTo(0)
@@ -303,12 +283,70 @@ class MinePageVC: UIViewController {
     
     func createWaver() {
         
-        let waveView_1 = WaveView.init(frame: CGRect.init(x: -5, y: 15, width: boundsWidth+10, height: 10+(headHeight)*30/290))//.init(frame: CGRectMake(-5, 15, boundsWidth+10, 10+(headHeight)*30/290))
+        let waveView_1 = WaveView.init(frame: CGRect.init(x: -5, y: 15, width: boundsWidth+10, height: 10+30))//.init(frame: CGRectMake(-5, 15, boundsWidth+10, 10+(headHeight)*30/290))
         
         waverView.addSubview(waveView_1)
         
         waveView_1.startWave()
         
+    }
+    
+    // 点击“我的发布”方法
+    func myReleaseAction() {
+        let vc = MyReleaseVC()
+        vc.hidesBottomBarWhenPushed = true
+        vc.consumeItems = myReleaseArray.reversed()
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+    }
+    
+    // 点击“关注”方法
+    func focusAction() {
+        // 获取当前用户ID
+        let currentUserId = currentUserID()
+        // 获取当前用户ID获取当前用户的信息
+        let currentUserInfo = try! Realm().objects(User.self).filter("userName == '\(currentUserId)'")
+        let vc = AttentionPeopleVC()
+        var itemArray = [AttentionPeople]()
+        for i in (currentUserInfo.first?.userInfo?.attentionPeople)! {
+            itemArray.append(i)
+        }
+        vc.itemFoucs = itemArray
+        vc.isFoucs = true
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    // 点击“粉丝”方法
+    func fansAction() {
+        // 获取当前用户ID
+        let currentUserId = currentUserID()
+        // 获取当前用户ID获取当前用户的信息
+        let currentUserInfo = try! Realm().objects(User.self).filter("userName == '\(currentUserId)'")
+        let vc = AttentionPeopleVC()
+        var itemArray = [FansPeople]()
+        for i in (currentUserInfo.first?.userInfo?.fansPeople)! {
+            itemArray.append(i)
+        }
+        vc.itemFans = itemArray
+        vc.isFoucs = false
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    // 下载方法
+    func download() {
+        
+        myReleaseArray.removeAll()
+        
+        // 获取当前登陆用户昵称
+        let currentNickname = currentUserNickname()
+        
+        let mainPageModel = realm.objects(MainPageModel.self)
+        
+        for i in mainPageModel{
+            if i.accountName == currentNickname {
+                myReleaseArray.append(i)
+            }
+        }
     }
     
     

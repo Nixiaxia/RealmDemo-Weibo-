@@ -10,6 +10,7 @@ import UIKit
 import Lightbox
 
 class MainPageCell: UITableViewCell {
+    
     var headImage: UIImageView! // 用户头像
     var accountNameLabel: UILabel! // 用户昵称
     var releaseTime: UILabel! // 发布时间
@@ -26,7 +27,7 @@ class MainPageCell: UITableViewCell {
     
     var mainPageModel: MainPageModel!
     
-    var praiseClickBack: ((Int,Bool) -> ())? // 点赞闭包传值
+    var praiseClickBack: ((Int,Bool,MainPageModel) -> ())? // 点赞闭包传值
     var commentClickBack: (()->())? // 评论按钮闭包
     
     var images = [UIImage]()
@@ -54,7 +55,7 @@ class MainPageCell: UITableViewCell {
             praiseFalse = true
             
             // 闭包传值
-            praiseClickBack!(praiseNumber,praiseFalse)
+            praiseClickBack!(praiseNumber,praiseFalse,mainPageModel)
             
         }else {
             praiseButton.setImage(UIImage.init(named: "点赞"), for: .normal)
@@ -64,7 +65,7 @@ class MainPageCell: UITableViewCell {
             praiseFalse = false
             
             // 闭包传值
-            praiseClickBack!(praiseNumber,praiseFalse)
+            praiseClickBack!(praiseNumber,praiseFalse,mainPageModel)
         }
     }
     
@@ -177,7 +178,7 @@ class MainPageCell: UITableViewCell {
         
         // 评论按钮
         commentButton = UIButton()
-        commentButton.setTitle(" \(commentNumber)", for: .normal)
+        commentButton.setTitle(" \(model.leaveMessage.count)", for: .normal)
         commentButton.setTitleColor(UIColor.darkGray, for: .normal)
         commentButton.titleLabel?.font = UIFont.systemFont(ofSize: 17)
         commentButton.setImage(UIImage.init(named: "评论"), for: .normal)

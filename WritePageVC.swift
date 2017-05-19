@@ -109,9 +109,13 @@ class WritePageVC: UIViewController {
         // 获取当前登陆用户头像
         let currentImage = currentUserImage()
         
-        mainPageModel = MainPageModel()        
+        let timeInterval = NSDate().timeIntervalSince1970 * 1000
+        
+        mainPageModel = MainPageModel()
+        mainPageModel.ID = Int(timeInterval)
         mainPageModel.accountName = currentID
         mainPageModel.time = currentIssueTime
+        mainPageModel.accountID = currentUserID()
         mainPageModel.content = writeTextView.text
         mainPageModel.praiseNumber = 0
         mainPageModel.praiseFalse = false
@@ -119,7 +123,8 @@ class WritePageVC: UIViewController {
 
         if imagesM.count == 0 {
             
-        }else if imagesM.count >= 1 || imagesM.count <= 9 {
+        }else if imagesM.count >= 1 && imagesM.count <= 9 {
+            print(imagesM.count)
             for index in 0..<imagesM.count {
                 let i = imagesM[index]
                 let image = (i as! UIImage).scaleImage(scaleSize: 0.02)
@@ -143,6 +148,7 @@ class WritePageVC: UIViewController {
             realm.add(mainPageModel)
         }
         
+        // 写入后清除内容
         writeTextView.text = ""
         imagesM.removeAllObjects()
         noteTextLabel.isHidden = false

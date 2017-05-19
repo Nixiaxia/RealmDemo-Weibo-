@@ -21,7 +21,7 @@ class MainPageCollectionCell: UICollectionViewCell {
         self.backgroundColor = UIColor.white
         
         images = UIImageView()
-        images.image = UIImage.init(named: "Timor没有梦")
+        images.image = UIImage.init(named: "testName")
         self.contentView.addSubview(images)
         images.snp.makeConstraints { (make) in
             make.top.left.bottom.right.equalTo(0)

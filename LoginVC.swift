@@ -282,7 +282,6 @@ class LoginVC: UIViewController, UITextFieldDelegate {
                     allowLogin = false
                 }
             }
-            
         }
         
         if txtPwd.text == "" { // 判断用户密码输入是否为空

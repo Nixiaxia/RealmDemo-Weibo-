@@ -14,7 +14,7 @@ class MainPageVC: UIViewController {
     
     let realm = try! Realm()
     
-    var tableView: UITableView!
+    private var tableView: UITableView!
     var consumeItems: Results<MainPageModel>? // 获取数据库模型对应的数据
     var consumeItemsArray = [MainPageModel]() // 分页需要一个数组
     
@@ -22,7 +22,7 @@ class MainPageVC: UIViewController {
     
     var currentID = SaveAccount() // 储存当前登陆用户ID
     
-    var item = MainPageModel()
+//    var item = MainPageModel()
     
     var cellDic = NSMutableDictionary()
     
@@ -192,6 +192,10 @@ class MainPageVC: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tableView.mj_header.beginRefreshing()
+    }
 
     /*
     // MARK: - Navigation
@@ -207,7 +211,7 @@ class MainPageVC: UIViewController {
 
 extension MainPageVC: UITableViewDelegate,UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { // section
+    func tableView(_ tableView: UITableView, numberOfRowsInSection seitemction: Int) -> Int { // section
         if self.consumeItems != nil  {
             return self.consumeItemsArray.count
         }else {
@@ -227,7 +231,7 @@ extension MainPageVC: UITableViewDelegate,UITableViewDataSource {
         
         if consumeItems != nil {
 
-            item = self.consumeItemsArray[indexPath.row] // 获取是第几个cell
+            let item = self.consumeItemsArray[indexPath.row] // 获取是第几个cell
             
             // 判断点赞人数
             if item.praisePeople.count == 0 { // 如果等于0，说明没人点赞
@@ -255,31 +259,34 @@ extension MainPageVC: UITableViewDelegate,UITableViewDataSource {
             }
  
             // 点赞续+1
-            cell.praiseClickBack = {(num, bool) in // 点赞button回调
+            cell.praiseClickBack = {(num, bool, myItem) in // 点赞button回调
                 
                 if bool == false { // 此时是取消点赞的回调bool值
-                    
-                    for i in 0..<self.item.praisePeople.count {
-                        if self.item.praisePeople[i].praiseName == self.currentID.saveAccount {// 找到当前登陆用户
+                
+                    for i in 0..<item.praisePeople.count {
+                        if item.praisePeople[i].praiseName == self.currentID.saveAccount {// 找到当前登陆用户
                             try! self.realm.write {
-                                self.realm.delete(self.item.praisePeople[i])// 从点赞用户里面删除
+                                self.realm.delete(item.praisePeople[i])// 从点赞用户里面删除
                             }
                             break // break，不然会数组越界
                         }
                     }
                     
                     try! self.realm.write {// 更新数据库的数据
-                        self.item.praiseNumber = num
-                        self.item.praiseFalse = false
+                        myItem.praiseNumber = num
+                        myItem.praiseFalse = false
+                        self.realm.add(myItem, update: true)
                     }
                     
                 }else { // 此时是点赞后传过来的bool值
+                    
                     let praisePeople = PraisePeople()
                     praisePeople.praiseName = self.currentID.saveAccount // 将当前登陆用户传值给praisePeople
                     try! self.realm.write { // 更新数据库
-                        self.item.praiseNumber = num
-                        self.item.praiseFalse = true
-                        self.item.praisePeople.append(praisePeople) // 把当前登陆用户储存到点赞的数据库中
+                        myItem.praiseNumber = num
+                        myItem.praiseFalse = true
+                        item.praisePeople.append(praisePeople) // 把当前登陆用户储存到点赞的数据库中
+                        self.realm.add(myItem, update: true)
                     }
                 }
             }
@@ -313,6 +320,7 @@ extension MainPageVC: UITableViewDelegate,UITableViewDataSource {
         let clickBlock = self.consumeItemsArray[indexPath.row]
         
         vc.item = clickBlock
+        
         // 当跳到下一页面，下面的tabbar隐藏
         vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)

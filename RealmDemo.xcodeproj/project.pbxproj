@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		268015784304B98B3AA3A7C7 /* Pods_RealmDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E20813C5801421383B557B7 /* Pods_RealmDemo.framework */; };
+		C903790D1E94F8F700B8A4B5 /* PraiseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C903790C1E94F8F700B8A4B5 /* PraiseCell.swift */; };
+		C91483C31E7BE5D90029F380 /* MyReleaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91483C21E7BE5D90029F380 /* MyReleaseVC.swift */; };
+		C91F496E1EBDF99100063A36 /* WriteLeaveMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91F496D1EBDF99100063A36 /* WriteLeaveMessageVC.swift */; };
 		C92498981E496FE4002F41EC /* MainPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92498971E496FE4002F41EC /* MainPageVC.swift */; };
 		C924989A1E496FFC002F41EC /* MinePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92498991E496FFC002F41EC /* MinePageVC.swift */; };
 		C924989C1E49B097002F41EC /* Model_1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C924989B1E49B097002F41EC /* Model_1.swift */; };
+		C949E41D1E7BBBF900BD87DC /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C949E41C1E7BBBF900BD87DC /* CustomButton.swift */; };
 		C94BCCC41E35F30B002276F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94BCCC31E35F30B002276F1 /* AppDelegate.swift */; };
 		C94BCCC61E35F30B002276F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94BCCC51E35F30B002276F1 /* ViewController.swift */; };
 		C94BCCC91E35F30B002276F1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C94BCCC71E35F30B002276F1 /* Main.storyboard */; };
@@ -258,6 +261,9 @@
 		C99E69681E52E95F00FE6CE7 /* waver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99E69671E52E95F00FE6CE7 /* waver.swift */; };
 		C99E696A1E52EAF000FE6CE7 /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99E69691E52EAF000FE6CE7 /* CellView.swift */; };
 		C9A6D4C81E48680C003529C8 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9A6D4C71E48680C003529C8 /* TabBarController.swift */; };
+		C9B101911EBCBDDB00EE5AB8 /* AttentionPeopleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B101901EBCBDDB00EE5AB8 /* AttentionPeopleVC.swift */; };
+		C9BF00BB1E9A117900665825 /* UserDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BF00BA1E9A117900665825 /* UserDetailVC.swift */; };
+		C9BF00BD1E9A1BBC00665825 /* LeaveMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BF00BC1E9A1BBC00665825 /* LeaveMessageCell.swift */; };
 		C9C807BE1E360603003BFB05 /* Model_0.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C807BD1E360603003BFB05 /* Model_0.swift */; };
 		C9D036511E63EECF00670B5C /* MainPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D036501E63EECF00670B5C /* MainPageCell.swift */; };
 		C9DB9DBA1E45C96F0064FF1A /* Tool.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DB9DB91E45C96F0064FF1A /* Tool.swift */; };
@@ -307,9 +313,13 @@
 		2D9A02760B56EF572272BAD6 /* Pods-RealmDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RealmDemo/Pods-RealmDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		3E20813C5801421383B557B7 /* Pods_RealmDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealmDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7004AB5B9C377B7E438CB86B /* Pods-RealmDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealmDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-RealmDemo/Pods-RealmDemo.release.xcconfig"; sourceTree = "<group>"; };
+		C903790C1E94F8F700B8A4B5 /* PraiseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PraiseCell.swift; sourceTree = "<group>"; };
+		C91483C21E7BE5D90029F380 /* MyReleaseVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyReleaseVC.swift; sourceTree = "<group>"; };
+		C91F496D1EBDF99100063A36 /* WriteLeaveMessageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WriteLeaveMessageVC.swift; sourceTree = "<group>"; };
 		C92498971E496FE4002F41EC /* MainPageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainPageVC.swift; sourceTree = "<group>"; };
 		C92498991E496FFC002F41EC /* MinePageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MinePageVC.swift; sourceTree = "<group>"; };
 		C924989B1E49B097002F41EC /* Model_1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model_1.swift; sourceTree = "<group>"; };
+		C949E41C1E7BBBF900BD87DC /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		C94BCCC01E35F30B002276F1 /* RealmDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealmDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C94BCCC31E35F30B002276F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = RealmDemo/AppDelegate.swift; sourceTree = "<group>"; };
 		C94BCCC51E35F30B002276F1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = RealmDemo/ViewController.swift; sourceTree = "<group>"; };
@@ -790,6 +800,9 @@
 		C99E69671E52E95F00FE6CE7 /* waver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = waver.swift; sourceTree = "<group>"; };
 		C99E69691E52EAF000FE6CE7 /* CellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
 		C9A6D4C71E48680C003529C8 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		C9B101901EBCBDDB00EE5AB8 /* AttentionPeopleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttentionPeopleVC.swift; sourceTree = "<group>"; };
+		C9BF00BA1E9A117900665825 /* UserDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDetailVC.swift; sourceTree = "<group>"; };
+		C9BF00BC1E9A1BBC00665825 /* LeaveMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaveMessageCell.swift; sourceTree = "<group>"; };
 		C9C807BD1E360603003BFB05 /* Model_0.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Model_0.swift; path = RealmDemo/Model_0.swift; sourceTree = "<group>"; };
 		C9D036501E63EECF00670B5C /* MainPageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainPageCell.swift; sourceTree = "<group>"; };
 		C9DB9DB91E45C96F0064FF1A /* Tool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tool.swift; sourceTree = "<group>"; };
@@ -851,7 +864,6 @@
 				C97ECA8D1E4470F500458FC4 /* RealmSwift.framework in Frameworks */,
 				C9EE341B1E710E9900914AF1 /* Pods_RealmDemo.framework in Frameworks */,
 				C97ECA891E4470F000458FC4 /* Realm.framework in Frameworks */,
-				268015784304B98B3AA3A7C7 /* Pods_RealmDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -934,6 +946,7 @@
 			children = (
 				C99E69691E52EAF000FE6CE7 /* CellView.swift */,
 				C99E69671E52E95F00FE6CE7 /* waver.swift */,
+				C949E41C1E7BBBF900BD87DC /* CustomButton.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -2009,6 +2022,8 @@
 				C9D036501E63EECF00670B5C /* MainPageCell.swift */,
 				C94FA1731E7671CF0025A05C /* MainPageCollectionCell.swift */,
 				C984FC2D1E7A8E8F003AC117 /* CommentTableViewCell.swift */,
+				C903790C1E94F8F700B8A4B5 /* PraiseCell.swift */,
+				C9BF00BC1E9A1BBC00665825 /* LeaveMessageCell.swift */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -2024,6 +2039,10 @@
 				C94FA4441E77E6620025A05C /* MainPageCellDetails.swift */,
 				C99E69651E52E58000FE6CE7 /* WritePageVC.swift */,
 				C92498991E496FFC002F41EC /* MinePageVC.swift */,
+				C91483C21E7BE5D90029F380 /* MyReleaseVC.swift */,
+				C9BF00BA1E9A117900665825 /* UserDetailVC.swift */,
+				C9B101901EBCBDDB00EE5AB8 /* AttentionPeopleVC.swift */,
+				C91F496D1EBDF99100063A36 /* WriteLeaveMessageVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -2157,6 +2176,7 @@
 				TargetAttributes = {
 					C94BCCBF1E35F30B002276F1 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = B3ARNPV27Z;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -2353,6 +2373,7 @@
 				C94FA4161E77CB100025A05C /* UIScreen+JKFrame.m in Sources */,
 				C94FA37B1E77CB0F0025A05C /* NSData+JKAPNSToken.m in Sources */,
 				C94FA3A81E77CB100025A05C /* NSObject+JKRuntime.m in Sources */,
+				C91483C31E7BE5D90029F380 /* MyReleaseVC.swift in Sources */,
 				C94BCCC41E35F30B002276F1 /* AppDelegate.swift in Sources */,
 				C9E6C2B81E7125C700DEAD4F /* MBProgressHUD.m in Sources */,
 				C9E6C2C31E7125C700DEAD4F /* UIImage+GIF.m in Sources */,
@@ -2360,6 +2381,7 @@
 				C9E6C2C81E7125C700DEAD4F /* UIView+WebCacheOperation.m in Sources */,
 				C94F4CDD1E641865006CE43A /* Reusable+CSExtensions.swift in Sources */,
 				C9A6D4C81E48680C003529C8 /* TabBarController.swift in Sources */,
+				C9BF00BB1E9A117900665825 /* UserDetailVC.swift in Sources */,
 				C94FA1681E763A520025A05C /* PYPhotosPreviewController.m in Sources */,
 				C94FA3C31E77CB100025A05C /* NSMutableURLRequest+JKUpload.m in Sources */,
 				C94FA3F21E77CB100025A05C /* UIImage+JKAlpha.m in Sources */,
@@ -2388,6 +2410,7 @@
 				C94FA4041E77CB100025A05C /* UIImageView+JKFaceAwareFill.m in Sources */,
 				C94FA3EA1E77CB100025A05C /* UIControl+JKActionBlocks.m in Sources */,
 				C94FA4181E77CB100025A05C /* UIScrollView+JKPages.m in Sources */,
+				C9BF00BD1E9A1BBC00665825 /* LeaveMessageCell.swift in Sources */,
 				C94FA3B61E77CB100025A05C /* NSString+JKRemoveEmoji.m in Sources */,
 				C9E6C2BD1E7125C700DEAD4F /* SDWebImageDecoder.m in Sources */,
 				C94FA4351E77CB100025A05C /* UIViewController+JKBackButtonTouched.m in Sources */,
@@ -2426,6 +2449,7 @@
 				C94FA4081E77CB100025A05C /* UILabel+JKAdjustableLabel.m in Sources */,
 				C94FA4101E77CB100025A05C /* UINavigationItem+JKLoading.m in Sources */,
 				C94FA42E1E77CB100025A05C /* UIView+JKNib.m in Sources */,
+				C903790D1E94F8F700B8A4B5 /* PraiseCell.swift in Sources */,
 				C94FA37F1E77CB0F0025A05C /* NSData+JKGzip.m in Sources */,
 				C94FA43A1E77CB100025A05C /* UIWebView+JKBlocks.m in Sources */,
 				C94FA1671E763A520025A05C /* PYPhotosNavigationController.m in Sources */,
@@ -2443,6 +2467,7 @@
 				C94FA3701E77CB0F0025A05C /* NSFetchRequest+JKExtensions.m in Sources */,
 				C94FA3D41E77CB100025A05C /* UIApplication+JKPermissions.m in Sources */,
 				C94FA4241E77CB100025A05C /* UITextView+JKPinchZoom.m in Sources */,
+				C949E41D1E7BBBF900BD87DC /* CustomButton.swift in Sources */,
 				C94FA3FD1E77CB100025A05C /* UIImage+JKRemoteSize.m in Sources */,
 				C94FA4021E77CB100025A05C /* UIImageView+JKAddition.m in Sources */,
 				C94FA3E41E77CB100025A05C /* UIButton+JKTouchAreaInsets.m in Sources */,
@@ -2456,6 +2481,7 @@
 				C94FA3921E77CB0F0025A05C /* NSFileHandle+JKReadLine.m in Sources */,
 				C92498981E496FE4002F41EC /* MainPageVC.swift in Sources */,
 				C94FA1711E763A520025A05C /* PYPhotosView.m in Sources */,
+				C91F496E1EBDF99100063A36 /* WriteLeaveMessageVC.swift in Sources */,
 				C94FA1651E763A520025A05C /* MBProgressHUD+PYExtension.m in Sources */,
 				C94FA3F41E77CB100025A05C /* UIImage+JKBetterFace.m in Sources */,
 				C94FA3BF1E77CB100025A05C /* NSTimer+JKBlocks.m in Sources */,
@@ -2485,6 +2511,7 @@
 				C94FA4141E77CB100025A05C /* UIResponder+JKChain.m in Sources */,
 				C9E6C2B51E7125C700DEAD4F /* DACircularProgressView.m in Sources */,
 				C94FA3B81E77CB100025A05C /* NSString+JKSize.m in Sources */,
+				C9B101911EBCBDDB00EE5AB8 /* AttentionPeopleVC.swift in Sources */,
 				C94FA3E11E77CB100025A05C /* UIButton+JKIndicator.m in Sources */,
 				C9DB9DBC1E45C9C30064FF1A /* LoginVC.swift in Sources */,
 				C94FA4401E77CB100025A05C /* UIWebView+JKStyle.m in Sources */,
@@ -2562,6 +2589,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2578,7 +2606,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -2612,6 +2640,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -2622,7 +2651,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = RealmDemo/Header.h;
@@ -2635,12 +2664,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2D9A02760B56EF572272BAD6 /* Pods-RealmDemo.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = B3ARNPV27Z;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = RealmDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lenovohit.RealmDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2653,12 +2686,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7004AB5B9C377B7E438CB86B /* Pods-RealmDemo.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = B3ARNPV27Z;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = RealmDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.lenovohit.RealmDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
