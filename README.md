@@ -1,2 +1,2 @@
 # GraduationProject
-MyGraduationProject, language is ‘Swift3.0’
+MyGraduationProject, language is 'Swift3.0'
